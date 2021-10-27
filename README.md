@@ -1,128 +1,95 @@
-## Functional Requirements
+---
+title: Data and Applications | Project Phase - 4
+subtitle: Team-40 'Life is a Schema'
+author:
+- Pratyaksh Gautam (2020114002)
+- Shubh Bhullar (2020101009)
+- Shikhar Saxena (2021121010)
+---
 
-- [ ] Insert
-    - [ ] insertStadium
-    - [ ] insertTeam
-    - [ ] insertPlayer
-    - [ ] insertManager
-    - [ ] insertMatch
-    - [ ] insertGoal
-    - [ ] insertResult
+# Introduction
 
-- [ ] Delete
-    - [ ] removePlayer
-    - [ ] removeTeam
-    - [ ] removeManager
-    - [ ] removeMatch
+`Dump.sql` contains all tables created and filled with data.
+Main code is in `cli.py` file.
+Run using
 
-- [ ] Update
-    - [ ] Player
-        - [ ] updateJerseyName
-        - [ ] updateJerseyNumber
-        - [ ] updatePosition
-    - [ ] Stadium
-        - [ ] updateCapacity
-    - [ ] Match
-        - [ ] updateStadiumID: 
-        - [ ] updateDate
-    - [ ] Rank
-        - [ ] updateRank
-
-- [ ] Retrievals
-    - [ ] getPlayer
-    - [ ] getGoalscorers
-    - [ ] getRanklist
-    - [ ] getAvgGoalsScored
-    - [ ] getPlayingEleven
-    - [ ] getAboveAvgPlayers
-    - [ ] searchPlayer
-    - [ ] searchTeam
-
-## Installation Instructions
-
-### MySQL
-
-Although you haven't strictly been told to explicitly use MySQL, it is highly recommended. To install and run MySQL on a Docker container, follow the [instructions we sent previously](https://rvk7895.notion.site/rvk7895/Instructions-to-install-MySQL-in-Docker-b91ff88693544d639abcd30844a2ff86).
-
-### PyMySQL
-
-Again, although you weren't explicitly told to use PyMySQL it is recommended that you do. That being said, you CANNOT use Pandas or any other Python library for the project. PyMySQL is an interface for connection to the MySQL server from Python.
-
-To install PyMySQL, you can use one of the two routes  
-
-### Pip
-
-``` bash
-pip install PyMySQL
+```shell
+$ python3 cli.py
 ```
 
-### Conda
+Video can be found at 
+https://drive.google.com/file/d/1f9o37Bsv3ASMqa3l4g9UcGOvblkc4dYE/view?usp=sharing 
 
-``` bash
-conda install -c anaconda pymysql
-```
+# Assumption made
 
-## Boilerplate
+Instead of Eleven Players (PlayingEleven) for each team,
+we have taken 5 players for each Team (for demonstration purpose).
 
-We have provided a boilerplate piece of code just to get you started. The only reason this boiler plate is being shared is to show you what an acceptable UI looks like. You can decide to not use the boilerplate if you feel that you have already implemented a similar flow for your application.
+# Queries
 
-### To Run
+## insertStadium
 
-To run the boilerplate code, you will need to login with your MySQL username and password (the boilerplate code has the username, password, and port hardcoded to work with the Docker installation instructions).
+To insert Stadium into the database.
 
-``` bash
-python3 boilerPlate.py
-```
+## updateStadiumID
 
-This will prompt for you to enter your username and password.
+To update a Stadium's ID in the database.
 
-### UI Interface
+## updateCapacity
 
-Due to the timeline, you are not expected to implement a graphical UI (although you aren't disallowed either). A CLI (Command Line Interface) will suffice for the sake of the project.
+To update the capacity of a particular Stadium.
 
-You can also have different interfaces depending on which kind of user logged in to your software.Taking here the example of the EMPLOYEE Database, under the assumption that someone from adminstration logged into, the UI will look something like this.
+## getGoalScorers
 
-```
-1. Hire a new employee
-2. Fire an employee
-3. Promote an employee
-4. Employee Statistics
-5. Logout
+Gets PlayerID and PlayerName of Goal Scorers among the Players.
 
-Enter Choice > 
-```
+## getAvgGoals
 
-The boiler plate has a similar interface. Only one function has been implemented in the code provided. But it's enough to give you an idea about what you have to do.
+Get average goals (sum of scores (from result table) for all matches divided by the number of matches).
 
-### Error Handling
+## searchTeam
 
-Although in this code, error handling hasn't explicitly been handled, you have to handle errors appropriately.  
+Retrieves Team information for given TeamID.
 
-For example, if you try to delete a department, you can only do so after you've reassigned all the employess to another department. Or if you want to fire the manager of a department, you can only do so after assigning the department a new manager (where again, yes, the manager has to satisfy the foreign key constrain i.e. should be an employee himself)
+## insertTeam
 
-Instead of handling all the errors yourself, you can make use of error messages which MySQL returns. [You might find this useful to implement when you want to debug as well](https://stackoverflow.com/questions/25026244/how-to-get-the-mysql-type-of-error-with-pymysql).
+Inserts Team into database (Assigns five(eleven) players to the team which are not associated with any other team).
+Similarly alots a manager and stadium to this team which are not associated with any other team.
 
-``` python
-try:
-    do_stuff()
-except Exception as e:
-    print (e)
-```
+## insertMatch
 
-## Creating Dump File For MySQL
+To insert Match between two teams.
 
-If you plan to use MySQL. The database dump file can be created using
+## removeMatch
 
-``` bash
-mysqldump -u username -p databasename > filename.sql
-```
+To remove Match for given MatchID.
 
+## removeTeam
 
-## Resources
+Removes Team for given TeamID.
+Sets TeamID to NULL for the players associated with this team.
 
-* https://www.python.org/dev/peps/pep-0249/
-* https://dev.mysql.com/doc/connector-python/en/
-* http://zetcode.com/python/pymysql/
-* https://www.tutorialspoint.com/python3/python_database_access.htm
-* https://o7planning.org/en/11463/connecting-mysql-database-in-python-using-pymysql
-* https://www.journaldev.com/15539/python-mysql-example-tutorial
+## getPlayer
+
+Gets Player information about the given PlayerID.  
+
+## getPlayingEleven
+
+Displays the PlayingEleven members for the given TeamID.
+
+## updateJerseyName
+
+Update Jersey Name for given Player (PlayerID).
+
+## updateJerseyNumber
+
+Update Jersey Number for given Player (PlayerID).
+
+## insertManager
+
+Inserts Manager into the database.
+
+## removeManager
+
+Deletes Manager from the database.
+Will allot a new Manager to the team if this Manager is mapped to some team. 

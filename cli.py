@@ -44,7 +44,7 @@ def insertintotable(params: dict, vals, table):
             vals[id] = "'" + vals[id] + "'"
 
         if (type == 'string' or type == 'YYYY-MM-DD') and vals[id] is not pymysql.NULL:
-            vals[id] = "'" + quote(vals[id]) + "'"
+            vals[id] = "'" + vals[id] + "'"
 
     try:
         query = f"INSERT INTO {table} ({', '.join(fields)}) VALUES ({', ' .join(vals)});"
